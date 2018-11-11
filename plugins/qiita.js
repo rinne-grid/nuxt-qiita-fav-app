@@ -5,11 +5,12 @@ module.exports = {
     const _uri = "https://qiita.com/api/v2/items";
     return axios.get(_uri,
       {
-        params: [
-          {'page': page},
-          {'per_page': per_page}
-        ]
+        params: {
+          page: page,
+          per_page: per_page
+        }
       }
     );
+
   }
 };
