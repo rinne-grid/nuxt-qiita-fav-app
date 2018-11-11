@@ -1,0 +1,25 @@
+{
+  "name": "my-qiita-app",
+  "version": "1.0.0",
+  "description": "My mathematical Nuxt.js project",
+  "author": "rinne_grid",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.0.0",
+    "axios": "^0.18.0",
+    "cross-env": "^5.2.0",
+    "nuxt": "^2.0.0",
+    "vuetify": "^1.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2"
+  }
+}
