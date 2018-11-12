@@ -1,6 +1,45 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 sm12>
+
+  <v-card
+    flat
+  >
+      <v-toolbar
+        color="primary"
+        dark
+      >
+      <v-list>
+        <v-list-tile>
+          <v-list-tile-title class="title">
+            タグ
+          </v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-toolbar>
+    <v-card class="d-inline-block elevation-12">
+      <v-navigation-drawer
+        v-model="drawer"
+        :clipped="true"
+        permanent
+        stateless
+        value="true"
+      >
+        <v-list dense>
+          <v-list-tile
+            v-for="tag in tags"
+            :key="tag"
+            :value="tag.active"
+            @click=""
+          >
+            <v-list-tile-content>
+              <v-list-tile-title @click="tagFilter(tag)">{{ tag }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-navigation-drawer>
+    </v-card>
+  </v-card>
+    <v-flex xs8 sm8>
       <template v-for="item in items">
       <v-card>
         <v-flex>
@@ -33,7 +72,10 @@
   export default {
     data () {
       return {
-        items: []
+        items: [],
+        tags: [],
+        itemsSource: [],
+        drawer: true
       }
     },
     components: {
@@ -41,7 +83,7 @@
       VuetifyLogo
     },
     // async asyncData () {
-    asyncData() {
+    asyncData({store}) {
       // let { data } = await axios.get("https://qiita.com/api/v2/items",
       //   {
       //     params: {
@@ -60,10 +102,23 @@
       //       per_page: '1'
       //     }
       //   }
-      return getQiitaItems('1', '5')
+      return getQiitaItems('1', '30')
         .then((res) => {
+          const tags = []
+          const items = res.data
+          items.forEach((item) => {
+            item.tags.forEach((tag) => {
+              // タグが存在しない
+              const tagName = tag["name"]
+              if(!tags.includes(tagName)) {
+                tags.push(tagName)
+              }
+            })
+          })
           return {
-            items: res.data
+            items: res.data,
+            itemsSource: res.data,
+            tags: tags
           }
         })
     },
@@ -74,6 +129,18 @@
       dateFormat (date, dateFormatStr, options) {
         const dateLoc = new Date(date).toLocaleString('ja-JP', {timeZone: 'Asia/Tokyo'} )
         return this.$date_fns_format(dateLoc, dateFormatStr, options)
+      },
+      tagFilter(tag) {
+        const filteredItems = []
+        this.itemsSource.forEach((item) => {
+          let exist = item.tags.some((tagObj) => {
+            return tag === tagObj["name"]
+          })
+          if(exist) {
+            filteredItems.push(item)
+          }
+        })
+        this.items = filteredItems
       }
     }
   }

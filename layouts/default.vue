@@ -1,5 +1,6 @@
 <template>
   <v-app >
+  <!--
     <v-navigation-drawer
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -8,6 +9,7 @@
       app
 
     >
+
       <v-list>
         <v-list-tile
           v-for="(item, i) in items"
@@ -16,15 +18,14 @@
           router
           exact
         >
-          <v-list-tile-action>
-            <v-icon v-html="item.icon" />
-          </v-list-tile-action>
+
           <v-list-tile-content>
             <v-list-tile-title v-text="item.title" />
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+    -->
     <v-toolbar
       :clipped-left="clipped"
       fixed
@@ -70,7 +71,7 @@
   export default {
     data() {
       return {
-        clipped: false,
+        clipped: true,
         drawer: true,
         fixed: false,
         items: [
@@ -80,7 +81,7 @@
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'Vuetify.js'
+        title: 'Get Qiita Nuxt App'
       }
     }
   }
